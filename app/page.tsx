@@ -1,5 +1,13 @@
+import Hero from "@/components/Hero";
+import Providers from "@/components/Providers";
+
 const HomePage = () => {
-  return <main>HomePage</main>;
+  return (
+    <main className="mt-16">
+      <Hero />
+      <Providers />
+    </main>
+  );
 };
 
 export default HomePage;

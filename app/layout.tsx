@@ -1,9 +1,12 @@
+import { Bai_Jamjuree } from "next/font/google";
 import Navbar from "@/components/Navbar";
-import "./globals.css";
-import { Inter } from "next/font/google";
 import Footer from "@/components/Footer";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const baiJamjuree = Bai_Jamjuree({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata = {
   title: "Elysian Feeds",
@@ -16,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={baiJamjuree.className}>
         <Navbar />
         {children}
         <Footer />

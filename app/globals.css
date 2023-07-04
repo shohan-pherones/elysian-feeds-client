@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* BROWSER STYLES */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(31, 178, 166, 0.5);
+  height: 10%;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #1fb2a6;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1d232a;
+}
+
+::selection {
+  background-color: #1fb2a6;
+}
+
+/* COMMON STYLES */
+.wrapper {
+  @apply container mx-auto px-5 md:px-0;
+}
+
+.section-padding {
+  @apply py-10 md:py-20;
+}
+
+/* SWIPER STYLES */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #1fb2a6 !important;
+  fill: #1fb2a6 !important;
+  stroke: #1fb2a6 !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: #1fb2a6 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #1fb2a6 !important;
+}

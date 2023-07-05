@@ -18,7 +18,7 @@ const Providers = () => {
       {error && <Error error={error.message} />}
 
       {providers && (
-        <div className="flex flex-wrap gap-10 justify-center">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
           {providers
             .sort(
               (a: any, b: any) =>

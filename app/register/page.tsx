@@ -2,6 +2,11 @@
 
 import { useCallback, useState } from "react";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { axiosPost } from "@/lib/axiosPost";
+import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { login } from "@/features/auth/userSlice";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SectionTitle from "@/components/SectionTitle";
 
@@ -18,19 +23,33 @@ const RegisterPage = () => {
 
   useSmoothScroll();
 
-  const handleRegister = useCallback(async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-    setFormData({
-      name: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      image: "",
-      address: "",
-      occupation: "",
-    });
-  }, []);
+  const handleRegister = useCallback(
+    async (e: React.SyntheticEvent) => {
+      e.preventDefault();
+
+      const data = await axiosPost("/api/users/register", { ...formData });
+
+      if (data) {
+        dispatch(login(data));
+        router.push("/");
+        toast.success("Successfully registered.");
+      }
+
+      setFormData({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+        image: "",
+        address: "",
+        occupation: "",
+      });
+    },
+    [formData, router, dispatch]
+  );
 
   return (
     <main className="mt-16">

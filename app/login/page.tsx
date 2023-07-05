@@ -2,6 +2,11 @@
 
 import { useCallback, useState } from "react";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { axiosPost } from "@/lib/axiosPost";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { login } from "@/features/auth/userSlice";
 import Link from "next/link";
 import SectionTitle from "@/components/SectionTitle";
 
@@ -13,14 +18,28 @@ const LoginPage = () => {
 
   useSmoothScroll();
 
-  const handleLogin = useCallback((e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-    setFormData({
-      email: "",
-      password: "",
-    });
-  }, []);
+  const handleLogin = useCallback(
+    async (e: React.SyntheticEvent) => {
+      e.preventDefault();
+
+      const data = await axiosPost("/api/users/login", { ...formData });
+
+      if (data) {
+        dispatch(login(data));
+        router.push("/");
+        toast.success("Successfully logged in.");
+      }
+
+      setFormData({
+        email: "",
+        password: "",
+      });
+    },
+    [formData, router, dispatch]
+  );
 
   return (
     <main className="mt-16">

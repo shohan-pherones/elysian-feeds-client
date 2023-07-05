@@ -1,6 +1,7 @@
 "use client";
 
-import { store } from "@/store/store";
+import { store, persistor } from "@/store/store";
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { Bai_Jamjuree } from "next/font/google";
 import { Toaster } from "react-hot-toast";
@@ -26,10 +27,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={baiJamjuree.className}>
         <Provider store={store}>
-          <Toaster />
-          <Navbar />
-          {children}
-          <Footer />
+          <PersistGate loading={null} persistor={persistor}>
+            <Toaster />
+            <Navbar />
+            {children}
+            <Footer />
+          </PersistGate>
         </Provider>
       </body>
     </html>

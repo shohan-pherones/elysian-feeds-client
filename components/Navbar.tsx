@@ -1,6 +1,21 @@
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { logout } from "@/features/auth/userSlice";
+import { useCallback } from "react";
+import { toast } from "react-hot-toast";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
+  const user = useSelector((state: RootState) => state?.user?.user?.user);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = useCallback(() => {
+    dispatch(logout());
+    toast.success("Successfully logged out.");
+  }, [dispatch]);
+
   const navLinks = (
     <>
       <li>
@@ -10,7 +25,7 @@ const Navbar = () => {
   );
 
   return (
-    <header className="navbar bg-base-100/80 fixed top-0 left-0 z-[100] shadow-xl border-b border-white/30 backdrop-blur-xl">
+    <header className="navbar h-16 bg-base-100/80 fixed top-0 left-0 z-[100] shadow-xl border-b border-white/30 backdrop-blur-xl">
       <nav className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -45,10 +60,36 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </nav>
 
-      <nav className="navbar-end">
-        <Link href="/login" className="btn btn-accent">
-          Login
-        </Link>
+      <nav className="navbar-end gap-3 items-center">
+        {user && (
+          <div
+            className="tooltip tooltip-left tooltip-accent h-12 w-12 group"
+            data-tip={user.name}
+          >
+            <Link href="/profile">
+              <Image
+                src={user.image}
+                alt={user.name}
+                width={50}
+                height={50}
+                priority
+                className="w-full h-full object-cover rounded-full"
+              />
+            </Link>
+          </div>
+        )}
+
+        {!user && (
+          <Link href="/login" className="btn btn-accent">
+            Login
+          </Link>
+        )}
+
+        {user && (
+          <button onClick={handleLogout} className="btn btn-secondary">
+            Logout
+          </button>
+        )}
       </nav>
     </header>
   );

@@ -18,10 +18,8 @@ const RegisterPage = () => {
 
   useSmoothScroll();
 
-  const handleLogin = useCallback((e: React.SyntheticEvent) => {
+  const handleRegister = useCallback(async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
-    /* FORM SUBMISSION */
 
     setFormData({
       name: "",
@@ -41,7 +39,7 @@ const RegisterPage = () => {
 
         <div className="flex justify-center">
           <form
-            onSubmit={handleLogin}
+            onSubmit={handleRegister}
             className="card flex-shrink-0 w-full max-w-md shadow-2xl bg-base-300"
           >
             <div className="card-body">

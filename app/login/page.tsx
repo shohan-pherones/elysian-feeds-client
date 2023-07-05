@@ -16,8 +16,6 @@ const LoginPage = () => {
   const handleLogin = useCallback((e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    /* FORM SUBMISSION */
-
     setFormData({
       email: "",
       password: "",

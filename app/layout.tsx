@@ -1,4 +1,9 @@
+"use client";
+
+import { store } from "@/store/store";
+import { Provider } from "react-redux";
 import { Bai_Jamjuree } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -20,9 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={baiJamjuree.className}>
-        <Navbar />
-        {children}
-        <Footer />
+        <Provider store={store}>
+          <Toaster />
+          <Navbar />
+          {children}
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

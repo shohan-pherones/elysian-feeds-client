@@ -1,3 +1,5 @@
+"use client";
+
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { logout } from "@/features/auth/userSlice";
@@ -21,6 +23,26 @@ const Navbar = () => {
       <li>
         <Link href="/">Home</Link>
       </li>
+      {user && user.role === "user" && (
+        <li>
+          <Link href="/dashboard/user">Dashboard</Link>
+        </li>
+      )}
+      {user && user.role === "providerConnector" && (
+        <li>
+          <Link href="/dashboard/provider-connector">Dashboard</Link>
+        </li>
+      )}
+      {user && user.role === "consumerConnector" && (
+        <li>
+          <Link href="/dashboard/consumer-connector">Dashboard</Link>
+        </li>
+      )}
+      {user && user.role === "admin" && (
+        <li>
+          <Link href="/dashboard/admin">Dashboard</Link>
+        </li>
+      )}
     </>
   );
 

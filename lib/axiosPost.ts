@@ -1,11 +1,20 @@
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
-export const axiosPost = async (endpoint: string, data: any) => {
+export const axiosPost = async (
+  endpoint: string,
+  data: any,
+  token: string = ""
+) => {
   try {
     const res = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}${endpoint}`,
-      data
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     if (res.data) {

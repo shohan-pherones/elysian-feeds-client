@@ -4,7 +4,7 @@ import GalleryItem from "./GalleryItem";
 
 const Gallery = () => {
   return (
-    <section className="wrapper section-padding">
+    <section id="gallery" className="wrapper section-padding">
       <SectionTitle title="Ethereal Exhibit" />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">

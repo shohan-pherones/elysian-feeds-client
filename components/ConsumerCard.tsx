@@ -32,7 +32,7 @@ const ConsumerCard: React.FC<ConsumerCardProps> = ({
         <h2 className="card-title">{name}</h2>
         <p>Address: {address}</p>
         <p>Total Consumptions: {consumptions}</p>
-        <div className="card-actions justify-end">
+        <div className="card-actions justify-start">
           <Link href={`/providers/${id}`} className="btn btn-accent">
             View Details
           </Link>

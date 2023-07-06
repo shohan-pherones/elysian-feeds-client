@@ -10,7 +10,7 @@ const Consumers = () => {
   const { data: consumers, error, isLoading } = useFetch("/api/consumers/all");
 
   return (
-    <section className="wrapper section-padding">
+    <section id="top-consumers" className="wrapper section-padding">
       <SectionTitle title="Top Consumers" />
 
       {isLoading && <Loading isLoading={isLoading} />}

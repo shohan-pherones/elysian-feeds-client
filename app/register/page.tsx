@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { axiosPost } from "@/lib/axiosPost";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
@@ -20,8 +19,6 @@ const RegisterPage = () => {
     address: "",
     occupation: "",
   });
-
-  useSmoothScroll();
 
   const dispatch = useDispatch();
   const router = useRouter();

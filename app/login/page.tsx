@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 import { axiosPost } from "@/lib/axiosPost";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -15,8 +14,6 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-
-  useSmoothScroll();
 
   const dispatch = useDispatch();
   const router = useRouter();

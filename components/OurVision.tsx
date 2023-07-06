@@ -3,7 +3,7 @@ import SectionTitle from "./SectionTitle";
 
 const OurVision = () => {
   return (
-    <section className="wrapper section-padding">
+    <section id="our-vision" className="wrapper section-padding">
       <SectionTitle title="Our Vision" />
 
       <div className="flex flex-col gap-20">

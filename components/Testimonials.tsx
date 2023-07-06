@@ -24,7 +24,7 @@ const Testimonials = () => {
   const { data: reviews, error, isLoading } = useFetch("/api/reviews");
 
   return (
-    <section className="wrapper section-padding">
+    <section id="testimonials" className="wrapper section-padding">
       <SectionTitle title="Voices of Satisfaction" />
 
       {isLoading && <Loading isLoading={isLoading} />}

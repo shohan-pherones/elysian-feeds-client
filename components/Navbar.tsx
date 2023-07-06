@@ -23,6 +23,12 @@ const Navbar = () => {
       <li>
         <Link href="/">Home</Link>
       </li>
+      <li>
+        <Link href="/#top-providers">Top Providers</Link>
+      </li>
+      <li>
+        <Link href="/#top-consumers">Top Consumers</Link>
+      </li>
       {user && user.role === "user" && (
         <li>
           <Link href="/dashboard/user">Dashboard</Link>
@@ -43,6 +49,15 @@ const Navbar = () => {
           <Link href="/dashboard/admin">Dashboard</Link>
         </li>
       )}
+      <li>
+        <Link href="/#our-vision">Our Vision</Link>
+      </li>
+      <li>
+        <Link href="/#gallery">Gallery</Link>
+      </li>
+      <li>
+        <Link href="/#testimonials">Testimonials</Link>
+      </li>
     </>
   );
 

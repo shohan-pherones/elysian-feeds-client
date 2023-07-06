@@ -19,36 +19,42 @@ const UserDashboard = () => {
     body: "",
   });
 
-  const { user, token, request } = useSelector(
-    (state: RootState) => state?.user?.user
-  );
+  const userStore = useSelector((state: RootState) => state?.user?.user);
 
   const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user.role !== "user") {
+    if (userStore?.user?.role !== "user") {
       router.push("/");
     }
-  }, [router, user]);
+  }, [router, userStore?.user?.role]);
 
   const handleRequest = useCallback(
     async (choice: string) => {
-      const data = await axiosPost("/api/checkpost", { choice }, token);
+      const data = await axiosPost(
+        "/api/checkpost",
+        { choice },
+        userStore?.token
+      );
 
       if (data) {
         dispatch(join(true));
         toast.success("Request sent successfully.");
       }
     },
-    [dispatch, token]
+    [dispatch, userStore?.token]
   );
 
   const handleCreateReview = useCallback(
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
-      const data = await axiosPost("/api/reviews", { ...formData }, token);
+      const data = await axiosPost(
+        "/api/reviews",
+        { ...formData },
+        userStore?.token
+      );
 
       if (data) {
         toast.success("Review created successfully.");
@@ -59,7 +65,7 @@ const UserDashboard = () => {
         body: "",
       });
     },
-    [formData, token]
+    [formData, userStore?.token]
   );
 
   return (
@@ -110,9 +116,13 @@ const UserDashboard = () => {
               <div>
                 <h2 className="text-5xl">
                   Welcome back,
-                  <span className="text-accent"> {user.name}.</span>
+                  <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
-                {!request && (
+                {userStore?.request || userStore?.user?.checkpost ? (
+                  <h2 className="mt-10 text-4xl">
+                    Your joining request is pending.
+                  </h2>
+                ) : (
                   <>
                     <h2 className="mt-10 text-4xl">
                       Which role would you like to take on?{" "}
@@ -132,11 +142,6 @@ const UserDashboard = () => {
                       </button>
                     </div>
                   </>
-                )}
-                {request && (
-                  <h2 className="mt-10 text-4xl">
-                    Your joining request is pending.
-                  </h2>
                 )}
               </div>
             )}

@@ -105,11 +105,7 @@ const UserDashboard = () => {
                   Welcome back,
                   <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
-                {userStore?.user?.checkpost ? (
-                  <h2 className="mt-10 text-4xl">
-                    Your joining request is pending.
-                  </h2>
-                ) : (
+                {!userStore?.user?.checkpost && (
                   <>
                     <h2 className="mt-10 text-4xl">
                       Which role would you like to take on?{" "}
@@ -129,6 +125,16 @@ const UserDashboard = () => {
                       </button>
                     </div>
                   </>
+                )}
+                {userStore?.user?.checkpost?.status === "pending" && (
+                  <h2 className="mt-10 text-2xl">
+                    Your joining request is pending.
+                  </h2>
+                )}
+                {userStore?.user?.checkpost?.status === "denied" && (
+                  <h2 className="mt-10 text-2xl">
+                    Your joining request has been rejected.
+                  </h2>
                 )}
               </div>
             )}

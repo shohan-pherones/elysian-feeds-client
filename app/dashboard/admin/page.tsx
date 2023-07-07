@@ -19,6 +19,7 @@ import Error from "@/components/Error";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<string>("requests");
+  const [secondLayerCheckposts, setSecondLayerCheckposts] = useState([]);
 
   const userStore = useSelector((state: RootState) => state.user?.user);
 
@@ -36,8 +37,22 @@ const AdminDashboard = () => {
     isLoading,
   } = useFetch("/api/checkpost", userStore?.token);
 
-  const handleApprove = useCallback(
-    async (checkId: string, userId: string, role: string, status: string) => {
+  useEffect(() => {
+    if (checkposts) {
+      setSecondLayerCheckposts(
+        checkposts.filter((checkpost: any) => checkpost.status === "pending")
+      );
+    }
+  }, [checkposts]);
+
+  const handleCheckpost = useCallback(
+    async (
+      checkId: string,
+      userId: string,
+      role: string,
+      status: string,
+      message: string
+    ) => {
       const data = await axiosPatch(
         `/api/users/${userId}`,
         { role, checkId, status },
@@ -45,10 +60,15 @@ const AdminDashboard = () => {
       );
 
       if (data) {
-        toast.success("Request approved.");
+        setSecondLayerCheckposts(
+          secondLayerCheckposts.filter(
+            (checkpost: any) => checkpost._id !== checkId
+          )
+        );
+        toast.success(message);
       }
     },
-    [userStore?.token]
+    [userStore?.token, secondLayerCheckposts]
   );
 
   return (
@@ -107,7 +127,7 @@ const AdminDashboard = () => {
                 <div className="overflow-x-auto mt-10">
                   {isLoading && <Loading isLoading={isLoading} />}
                   {error && <Error error={error.message} />}
-                  {checkposts && (
+                  {secondLayerCheckposts.length > 0 ? (
                     <table className="table">
                       <thead>
                         <tr>
@@ -119,62 +139,76 @@ const AdminDashboard = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {checkposts
-                          .filter(
-                            (checkpost: any) => checkpost.status === "pending"
-                          )
-                          .map((checkpost: any) => (
-                            <tr key={checkpost._id}>
-                              <td>
-                                <div className="flex items-center space-x-3">
-                                  <div className="avatar">
-                                    <div className="mask mask-squircle w-12 h-12">
-                                      <Image
-                                        src={checkpost.user.image}
-                                        alt={checkpost.user.name}
-                                        width={50}
-                                        height={50}
-                                        priority
-                                      />
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <div className="font-bold">
-                                      {checkpost.user.name}
-                                    </div>
-                                    <div className="text-sm opacity-50">
-                                      {checkpost.user.occupation}
-                                    </div>
+                        {secondLayerCheckposts.map((checkpost: any) => (
+                          <tr key={checkpost._id}>
+                            <td>
+                              <div className="flex items-center space-x-3">
+                                <div className="avatar">
+                                  <div className="mask mask-squircle w-12 h-12">
+                                    <Image
+                                      src={checkpost.user.image}
+                                      alt={checkpost.user.name}
+                                      width={50}
+                                      height={50}
+                                      priority
+                                    />
                                   </div>
                                 </div>
-                              </td>
-                              <td>{checkpost.user.email}</td>
-                              <td>{checkpost.choice}</td>
-                              <td>
-                                {new Date(
-                                  checkpost.createdAt
-                                ).toLocaleDateString()}
-                              </td>
-                              <td className="flex gap-5 items-center">
-                                <button
-                                  onClick={() =>
-                                    handleApprove(
-                                      checkpost._id,
-                                      checkpost.user._id,
-                                      checkpost.choice,
-                                      "approved"
-                                    )
-                                  }
-                                  className="btn btn-accent"
-                                >
-                                  Approve
-                                </button>
-                                <button className="btn btn-accent">Deny</button>
-                              </td>
-                            </tr>
-                          ))}
+                                <div>
+                                  <div className="font-bold">
+                                    {checkpost.user.name}
+                                  </div>
+                                  <div className="text-sm opacity-50">
+                                    {checkpost.user.occupation}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>{checkpost.user.email}</td>
+                            <td>{checkpost.choice}</td>
+                            <td>
+                              {new Date(
+                                checkpost.createdAt
+                              ).toLocaleDateString()}
+                            </td>
+                            <td className="flex gap-5 items-center">
+                              <button
+                                onClick={() =>
+                                  handleCheckpost(
+                                    checkpost._id,
+                                    checkpost.user._id,
+                                    checkpost.choice,
+                                    "approved",
+                                    "Request approved."
+                                  )
+                                }
+                                className="btn btn-accent"
+                              >
+                                Approve
+                              </button>
+                              <button
+                                onClick={() =>
+                                  handleCheckpost(
+                                    checkpost._id,
+                                    checkpost.user._id,
+                                    "user",
+                                    "denied",
+                                    "Request denied."
+                                  )
+                                }
+                                className="btn btn-accent"
+                              >
+                                Deny
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
+                  ) : (
+                    <div>
+                      <p className="text-2xl">There is no pending request.</p>
+                    </div>
                   )}
                 </div>
               </div>

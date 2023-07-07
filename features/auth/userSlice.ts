@@ -22,8 +22,11 @@ export const userSlice = createSlice({
     join: (state, action: PayloadAction<string>) => {
       state.user.user.checkpost = action.payload;
     },
+    updateUser: (state, action: PayloadAction<any>) => {
+      state.user.user = action.payload;
+    },
   },
 });
 
-export const { login, logout, join } = userSlice.actions;
+export const { login, logout, join, updateUser } = userSlice.actions;
 export default userSlice.reducer;

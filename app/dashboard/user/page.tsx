@@ -8,9 +8,10 @@ import { FaEnvelope } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { axiosPost } from "@/lib/axiosPost";
 import { toast } from "react-hot-toast";
-import { join } from "@/features/auth/userSlice";
+import { join, updateUser } from "@/features/auth/userSlice";
 import SectionTitle from "@/components/SectionTitle";
 import DashboardTab from "@/components/DashboardTab";
+import useFetch from "@/hooks/useFetch";
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState<string>("make-request");
@@ -24,6 +25,23 @@ const UserDashboard = () => {
   const router = useRouter();
 
   const dispatch = useDispatch();
+
+  const { data: user } = useFetch(
+    `/api/users/${userStore?.user?._id}`,
+    userStore?.token
+  );
+
+  useEffect(() => {
+    if (user) {
+      dispatch(updateUser(user));
+    }
+
+    if (user?.checkpost?.status === "approved") {
+      toast.success(`You've been promoted to ${user?.role}.`, {
+        duration: 10000,
+      });
+    }
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (userStore?.user?.role !== "user") {

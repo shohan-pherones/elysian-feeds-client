@@ -19,8 +19,8 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
     },
-    join: (state, action: PayloadAction<any>) => {
-      state.user.request = action.payload;
+    join: (state, action: PayloadAction<string>) => {
+      state.user.user.checkpost = action.payload;
     },
   },
 });

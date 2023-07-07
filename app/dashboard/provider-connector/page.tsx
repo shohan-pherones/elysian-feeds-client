@@ -10,7 +10,7 @@ const ProviderConnectorDashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user.role !== "providerConnector") {
+    if (user?.role !== "providerConnector") {
       router.push("/");
     }
   }, [router, user]);

@@ -10,7 +10,7 @@ const ConsumerConnectorDashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user.role !== "consumerConnector") {
+    if (user?.role !== "consumerConnector") {
       router.push("/");
     }
   }, [router, user]);

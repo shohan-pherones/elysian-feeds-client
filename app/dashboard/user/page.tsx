@@ -10,7 +10,7 @@ import { axiosPost } from "@/lib/axiosPost";
 import { toast } from "react-hot-toast";
 import { join } from "@/features/auth/userSlice";
 import SectionTitle from "@/components/SectionTitle";
-import clsx from "clsx";
+import DashboardTab from "@/components/DashboardTab";
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState<string>("make-request");
@@ -22,6 +22,7 @@ const UserDashboard = () => {
   const userStore = useSelector((state: RootState) => state?.user?.user);
 
   const router = useRouter();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const UserDashboard = () => {
       );
 
       if (data) {
-        dispatch(join(true));
+        dispatch(join(data._id));
         toast.success("Request sent successfully.");
       }
     },
@@ -72,41 +73,27 @@ const UserDashboard = () => {
     <main className="mt-16">
       <section className="wrapper section-padding">
         <SectionTitle title="User Dashboard" />
-
         {/* BOARD */}
         <div className="min-h-screen bg-black/50 rounded-2xl overflow-hidden shadow-2xl border border-white/20 grid grid-cols-[20rem_auto]">
           {/* SIDEBAR */}
           <aside className="bg-black flex justify-center p-10">
             <div className="flex flex-col gap-5 justify-start h-fit">
-              <button
-                onClick={() => setActiveTab("make-request")}
-                className={clsx(
-                  "flex items-center gap-3 p-5 w-full h-full rounded-lg shadow-2xl hover:bg-accent duration-300 hover:text-black",
-                  activeTab === "make-request"
-                    ? "bg-accent text-black"
-                    : "bg-base-100"
-                )}
+              <DashboardTab
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                tabName="make-request"
+                placeholder="Make Request"
               >
-                <span>
-                  <FaEnvelope />
-                </span>{" "}
-                Make Request
-              </button>
-              <button
-                onClick={() => setActiveTab("create-review")}
-                className={clsx(
-                  "flex items-center gap-3 p-5 w-full h-full rounded-lg shadow-2xl hover:bg-accent duration-300 hover:text-black",
-                  activeTab === "create-review"
-                    ? "bg-accent text-black"
-                    : "bg-base-100"
-                )}
+                {<FaEnvelope />}
+              </DashboardTab>
+              <DashboardTab
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                tabName="create-review"
+                placeholder="Create Review"
               >
-                {" "}
-                <span>
-                  <IoIosCreate />
-                </span>{" "}
-                Create Review
-              </button>
+                {<IoIosCreate />}
+              </DashboardTab>
             </div>
           </aside>
           {/* MAIN CONTENT */}
@@ -118,7 +105,7 @@ const UserDashboard = () => {
                   Welcome back,
                   <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
-                {userStore?.request || userStore?.user?.checkpost ? (
+                {userStore?.user?.checkpost ? (
                   <h2 className="mt-10 text-4xl">
                     Your joining request is pending.
                   </h2>

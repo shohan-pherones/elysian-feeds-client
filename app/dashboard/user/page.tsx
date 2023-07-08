@@ -124,7 +124,7 @@ const UserDashboard = () => {
                 {/* BEFORE SENDING REQ. */}
                 {!userStore?.user?.checkpost && (
                   <>
-                    <h2 className="mt-10 text-4xl">
+                    <h2 className="mt-10 text-2xl">
                       Which role would you like to take on?{" "}
                     </h2>
                     <div className="mt-3 flex gap-5">

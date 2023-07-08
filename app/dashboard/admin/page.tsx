@@ -8,6 +8,7 @@ import { BsEnvelopePaper } from "react-icons/bs";
 import { FiUsers } from "react-icons/fi";
 import { BiDonateHeart } from "react-icons/bi";
 import { FaHandsHelping } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 import { axiosPatch } from "@/lib/axiosPatch";
 import { toast } from "react-hot-toast";
 import SectionTitle from "@/components/SectionTitle";
@@ -18,8 +19,11 @@ import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState<string>("requests");
+  const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [secondLayerCheckposts, setSecondLayerCheckposts] = useState([]);
+  const [secondLayerUsers, setSecondLayerUsers] = useState([]);
+  const [secondLayerProviders, setSecondLayerProviders] = useState([]);
+  const [secondLayerConsumers, setSecondLayerConsumers] = useState([]);
 
   const userStore = useSelector((state: RootState) => state.user?.user);
 
@@ -37,6 +41,24 @@ const AdminDashboard = () => {
     isLoading,
   } = useFetch("/api/checkpost", userStore?.token);
 
+  const {
+    data: dataForUsers,
+    error: errorForUsers,
+    isLoading: loadingForUsers,
+  } = useFetch("/api/users", userStore?.token);
+
+  const {
+    data: dataForProviders,
+    error: errorForProviders,
+    isLoading: loadingForProviders,
+  } = useFetch("/api/providers/all");
+
+  const {
+    data: dataForConsumers,
+    error: errorForConsumers,
+    isLoading: loadingForConsumers,
+  } = useFetch("/api/consumers/all");
+
   useEffect(() => {
     if (checkposts) {
       setSecondLayerCheckposts(
@@ -44,6 +66,24 @@ const AdminDashboard = () => {
       );
     }
   }, [checkposts]);
+
+  useEffect(() => {
+    if (dataForUsers) {
+      setSecondLayerUsers(dataForUsers);
+    }
+  }, [dataForUsers]);
+
+  useEffect(() => {
+    if (dataForProviders) {
+      setSecondLayerProviders(dataForProviders);
+    }
+  }, [dataForProviders]);
+
+  useEffect(() => {
+    if (dataForConsumers) {
+      setSecondLayerConsumers(dataForConsumers);
+    }
+  }, [dataForConsumers]);
 
   const handleCheckpost = useCallback(
     async (
@@ -83,6 +123,14 @@ const AdminDashboard = () => {
               <DashboardTab
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
+                tabName="dashboard"
+                placeholder="Dashboard"
+              >
+                {<MdDashboard />}
+              </DashboardTab>
+              <DashboardTab
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
                 tabName="requests"
                 placeholder="Requests"
               >
@@ -116,12 +164,20 @@ const AdminDashboard = () => {
           </aside>
           {/* MAIN CONTENT */}
           <div className="p-10">
-            {/* FOR REQUESTS */}
-            {activeTab === "requests" && (
+            {/* FOR DASHBOARD TAB */}
+            {activeTab === "dashboard" && (
               <div>
                 <h2 className="text-5xl">
                   Welcome back,
                   <span className="text-accent"> {userStore?.user?.name}.</span>
+                </h2>
+              </div>
+            )}
+            {/* FOR REQUESTS */}
+            {activeTab === "requests" && (
+              <div>
+                <h2 className="text-5xl">
+                  Pending Requests: {secondLayerCheckposts.length}
                 </h2>
                 {/* REQUESTS TABLE */}
                 <div className="overflow-x-auto mt-10">
@@ -208,6 +264,219 @@ const AdminDashboard = () => {
                   ) : (
                     <div>
                       <p className="text-2xl">There is no pending request.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {/* FOR USERS */}
+            {activeTab === "users" && (
+              <div>
+                <h2 className="text-5xl">
+                  Registerd Users: {secondLayerUsers.length}
+                </h2>
+                {/* USERS TABLE */}
+                <div className="overflow-x-auto mt-10">
+                  {loadingForUsers && <Loading isLoading={loadingForUsers} />}
+                  {errorForUsers && <Error error={errorForUsers.message} />}
+                  {secondLayerUsers.length > 0 ? (
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Address</th>
+                          <th>Role</th>
+                          <th>Providers</th>
+                          <th>Consumers</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {secondLayerUsers.map((user: any) => (
+                          <tr key={user._id}>
+                            <td>
+                              <div className="flex items-center space-x-3">
+                                <div className="avatar">
+                                  <div className="mask mask-squircle w-12 h-12">
+                                    <Image
+                                      src={user.image}
+                                      alt={user.name}
+                                      width={50}
+                                      height={50}
+                                      priority
+                                    />
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className="font-bold">{user.name}</div>
+                                  <div className="text-sm opacity-50">
+                                    {user.occupation}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>{user.email}</td>
+                            <td>{user.address}</td>
+                            <td>{user.role}</td>
+                            <td>{user.providers?.length}</td>
+                            <td>{user.consumers?.length}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div>
+                      <p className="text-2xl">There is no users.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {/* FOR PROVIDERS */}
+            {activeTab === "providers" && (
+              <div>
+                <h2 className="text-5xl">
+                  All Providers: {secondLayerProviders.length}
+                </h2>
+                {/* PROVIDERS TABLE */}
+                <div className="overflow-x-auto mt-10">
+                  {loadingForProviders && (
+                    <Loading isLoading={loadingForProviders} />
+                  )}
+                  {errorForProviders && (
+                    <Error error={errorForProviders.message} />
+                  )}
+                  {secondLayerProviders.length > 0 ? (
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Joined</th>
+                          <th>Connector</th>
+                          <th>Contributions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {secondLayerProviders.map((provider: any) => (
+                          <tr key={provider._id}>
+                            <td>
+                              <div className="flex items-center space-x-3">
+                                <div className="avatar">
+                                  <div className="mask mask-squircle w-12 h-12">
+                                    <Image
+                                      src={provider.image}
+                                      alt={provider.name}
+                                      width={50}
+                                      height={50}
+                                      priority
+                                    />
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className="font-bold">
+                                    {provider.name}
+                                  </div>
+                                  <div className="text-sm opacity-50">
+                                    {provider.address}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              {new Date(
+                                provider.createdAt
+                              ).toLocaleDateString()}
+                            </td>
+                            <td>{provider.user?.name}</td>
+                            <td>
+                              {provider.contributions?.reduce(
+                                (sum: number, contr: any) =>
+                                  (sum += contr?.amount),
+                                0
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div>
+                      <p className="text-2xl">There is no providers.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {/* FOR CONSUMERS */}
+            {activeTab === "consumers" && (
+              <div>
+                <h2 className="text-5xl">
+                  All Consumers: {secondLayerConsumers.length}
+                </h2>
+                {/* CONSUMERS TABLE */}
+                <div className="overflow-x-auto mt-10">
+                  {loadingForConsumers && (
+                    <Loading isLoading={loadingForConsumers} />
+                  )}
+                  {errorForConsumers && (
+                    <Error error={errorForConsumers.message} />
+                  )}
+                  {secondLayerConsumers.length > 0 ? (
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Joined</th>
+                          <th>Connector</th>
+                          <th>Consumptions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {secondLayerConsumers.map((consumer: any) => (
+                          <tr key={consumer._id}>
+                            <td>
+                              <div className="flex items-center space-x-3">
+                                <div className="avatar">
+                                  <div className="mask mask-squircle w-12 h-12">
+                                    <Image
+                                      src={consumer.image}
+                                      alt={consumer.name}
+                                      width={50}
+                                      height={50}
+                                      priority
+                                    />
+                                  </div>
+                                </div>
+                                <div>
+                                  <div className="font-bold">
+                                    {consumer.name}
+                                  </div>
+                                  <div className="text-sm opacity-50">
+                                    {consumer.address}
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              {new Date(
+                                consumer.createdAt
+                              ).toLocaleDateString()}
+                            </td>
+                            <td>{consumer.user?.name}</td>
+                            <td>
+                              {consumer.consumptions?.reduce(
+                                (sum: number, consum: any) =>
+                                  (sum += consum?.amount),
+                                0
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div>
+                      <p className="text-2xl">There is no consumers.</p>
                     </div>
                   )}
                 </div>

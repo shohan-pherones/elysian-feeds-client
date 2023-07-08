@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { MdDashboard, MdCreateNewFolder } from "react-icons/md";
 import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { axiosPost } from "@/lib/axiosPost";
-import { IoIosCreate } from "react-icons/io";
+import { IoIosCreate, IoMdClose } from "react-icons/io";
 import { toast } from "react-hot-toast";
 import DashboardTab from "@/components/DashboardTab";
 import SectionTitle from "@/components/SectionTitle";
@@ -15,10 +15,13 @@ import useFetch from "@/hooks/useFetch";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import Image from "next/image";
+import clsx from "clsx";
 
 const ProviderConnectorDashboard = () => {
+  const [selectedProvider, setSelectedProvider] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("dashboard");
-  const [secondLayerProviders, setSecondLayerProviders] = useState([]);
+  const [secondLayerProviders, setSecondLayerProviders] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     rating: "",
     body: "",
@@ -27,6 +30,10 @@ const ProviderConnectorDashboard = () => {
     name: "",
     image: "",
     address: "",
+  });
+  const [formDataContribution, setFormDataContribution] = useState({
+    name: "",
+    amount: "",
   });
 
   const userStore = useSelector((state: RootState) => state?.user?.user);
@@ -84,6 +91,7 @@ const ProviderConnectorDashboard = () => {
       );
 
       if (data) {
+        setSecondLayerProviders([data, ...secondLayerProviders]);
         toast.success("Provider created successfully.");
       }
 
@@ -93,8 +101,40 @@ const ProviderConnectorDashboard = () => {
         address: "",
       });
     },
-    [formDataProvider, userStore?.token]
+    [formDataProvider, userStore?.token, secondLayerProviders]
   );
+
+  const handleContribute = (pid: string) => {
+    setIsModalOpen(true);
+    setSelectedProvider(pid);
+  };
+
+  const handleSubmitContribution = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    const data = await axiosPost(
+      `/api/providers/${selectedProvider}`,
+      { ...formDataContribution },
+      userStore?.token
+    );
+
+    if (data) {
+      setSecondLayerProviders(
+        secondLayerProviders.map((prova: any) =>
+          prova._id === selectedProvider
+            ? { ...prova, contributions: [...prova.contributions, data] }
+            : prova
+        )
+      );
+      setIsModalOpen(false);
+      toast.success("Contribution created successfully.");
+    }
+
+    setFormDataContribution({
+      name: "",
+      amount: "",
+    });
+  };
 
   return (
     <main className="mt-16">
@@ -213,7 +253,10 @@ const ProviderConnectorDashboard = () => {
                               )}
                             </td>
                             <td>
-                              <button className="btn btn-accent">
+                              <button
+                                onClick={() => handleContribute(provider._id)}
+                                className="btn btn-accent"
+                              >
                                 Contribute
                               </button>
                             </td>
@@ -312,7 +355,7 @@ const ProviderConnectorDashboard = () => {
             {/* FOR  REVIEW*/}
             {activeTab === "create-review" && (
               <div>
-                <h2 className="text-5xl">Create a review</h2>
+                <h2 className="text-5xl">Create a Review</h2>
                 {/* REVIEW FORM */}
                 <form
                   onSubmit={handleCreateReview}
@@ -369,6 +412,85 @@ const ProviderConnectorDashboard = () => {
           </div>
         </div>
       </section>
+      {/* MODAL TEMPLATE */}
+      <div
+        onClick={() => setIsModalOpen(false)}
+        className={clsx(
+          "fixed z-[101] bg-transparent top-0 left-0 right-0 bottom-0",
+          isModalOpen ? "block" : "hidden"
+        )}
+      ></div>
+      <div
+        className={clsx(
+          "fixed z-[102] bottom-20 right-60 w-[25rem] h-[25rem] rounded-xl bg-base-300 shadow-2xl duration-500 p-7",
+          isModalOpen ? "translate-y-0" : "translate-y-[100vh]"
+        )}
+      >
+        {/* UPPER CONTENTS */}
+        <div className="flex justify-between items-center text-2xl">
+          <h4>Create Contribution</h4>
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="text-rose-500/60 h-10 w-10 bg-rose-500/10 rounded-full flex justify-center items-center hover:text-rose-500 hover:bg-rose-500/30 duration-300"
+          >
+            <IoMdClose />
+          </button>
+        </div>
+        {/* CONTRIBUTION FORM */}
+        <form
+          onSubmit={handleSubmitContribution}
+          className="card flex-shrink-0 w-full mt-10"
+        >
+          <div className="card-body p-0">
+            {/* NAME */}
+            <div className="form-control">
+              <label htmlFor="name" className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                required
+                value={formDataContribution.name}
+                onChange={(e) =>
+                  setFormDataContribution({
+                    ...formDataContribution,
+                    name: e.target.value,
+                  })
+                }
+                type="text"
+                id="name"
+                placeholder="Biriyani"
+                className="input input-bordered"
+              />
+            </div>
+            {/* AMOUNT */}
+            <div className="form-control">
+              <label htmlFor="amount" className="label">
+                <span className="label-text">Amount (any unit)</span>
+              </label>
+              <input
+                required
+                value={formDataContribution.amount}
+                onChange={(e) =>
+                  setFormDataContribution({
+                    ...formDataContribution,
+                    amount: e.target.value,
+                  })
+                }
+                type="number"
+                id="amount"
+                placeholder="100"
+                className="input input-bordered"
+              />
+            </div>
+            {/* SUBMIT */}
+            <div className="form-control mt-6">
+              <button type="submit" className="btn btn-accent">
+                Contribute
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </main>
   );
 };

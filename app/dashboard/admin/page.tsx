@@ -171,6 +171,7 @@ const AdminDashboard = () => {
                   Welcome back,
                   <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
+                {/* GRAPH */}
               </div>
             )}
             {/* FOR REQUESTS */}

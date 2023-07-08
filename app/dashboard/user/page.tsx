@@ -37,9 +37,7 @@ const UserDashboard = () => {
     }
 
     if (user?.checkpost?.status === "approved") {
-      toast.success(`You've been promoted to ${user?.role}.`, {
-        duration: 10000,
-      });
+      toast.success(`You've been promoted to ${user?.role}.`);
     }
   }, [user, dispatch]);
 
@@ -123,6 +121,7 @@ const UserDashboard = () => {
                   Welcome back,
                   <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
+                {/* BEFORE SENDING REQ. */}
                 {!userStore?.user?.checkpost && (
                   <>
                     <h2 className="mt-10 text-4xl">
@@ -144,11 +143,21 @@ const UserDashboard = () => {
                     </div>
                   </>
                 )}
+                {/* AFTER SENDING REQ. */}
+                {userStore?.user?.checkpost &&
+                  userStore?.user?.checkpost?.status !== "pending" &&
+                  userStore?.user?.checkpost?.status !== "denied" && (
+                    <h2 className="mt-10 text-2xl">
+                      Your joining request has been sent successfully.
+                    </h2>
+                  )}
+                {/* PENDING STAGE */}
                 {userStore?.user?.checkpost?.status === "pending" && (
                   <h2 className="mt-10 text-2xl">
                     Your joining request is pending.
                   </h2>
                 )}
+                {/* DENIED STAGE */}
                 {userStore?.user?.checkpost?.status === "denied" && (
                   <h2 className="mt-10 text-2xl">
                     Your joining request has been rejected.

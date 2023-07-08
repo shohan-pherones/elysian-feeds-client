@@ -168,7 +168,7 @@ const UserDashboard = () => {
             {/* FOR  REVIEW*/}
             {activeTab === "create-review" && (
               <div>
-                <h2 className="text-5xl">Create a review</h2>
+                <h2 className="text-5xl">Create a Review</h2>
                 {/* REVIEW FORM */}
                 <form
                   onSubmit={handleCreateReview}

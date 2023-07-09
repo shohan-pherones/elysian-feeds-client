@@ -36,6 +36,8 @@ const AdminDashboard = () => {
   const [secondLayerConsumers, setSecondLayerConsumers] = useState([]);
   const [monthlyData, setMonthlyData] = useState<any[]>([]);
 
+  console.log(monthlyData);
+
   const userStore = useSelector((state: RootState) => state.user?.user);
 
   const router = useRouter();
@@ -123,51 +125,56 @@ const AdminDashboard = () => {
   );
 
   useEffect(() => {
-    const monthlyData: any = {};
+    const calculateMonthlyData = () => {
+      const monthlyData: any = {};
 
-    if (secondLayerProviders.length > 0 && secondLayerConsumers.length > 0) {
-      secondLayerProviders.forEach((provider: any) => {
-        const createdAt = new Date(provider.createdAt);
-        const month: string = createdAt.toLocaleString("default", {
-          month: "short",
+      secondLayerProviders?.forEach((provider: any) => {
+        provider?.contributions?.forEach((contribution: any) => {
+          const createdAt = new Date(contribution?.createdAt);
+          const month: string = createdAt?.toLocaleString("default", {
+            month: "short",
+          });
+
+          if (!monthlyData[month]) {
+            monthlyData[month] = {
+              month: month,
+              contributions: 0,
+              consumptions: 0,
+            };
+          }
+
+          monthlyData[month].contributions += contribution?.amount;
         });
-
-        if (!monthlyData[month]) {
-          monthlyData[month] = {
-            month: month,
-            contributions: 0,
-            consumptions: 0,
-          };
-        }
-
-        monthlyData[month].contributions += provider.contributions.reduce(
-          (total: number, contribution: any) => total + contribution.amount,
-          0
-        );
       });
 
-      secondLayerConsumers.forEach((consumer: any) => {
-        const createdAt = new Date(consumer.createdAt);
-        const month = createdAt.toLocaleString("default", { month: "short" });
+      secondLayerConsumers?.forEach((consumer: any) => {
+        consumer?.consumptions?.forEach((consumption: any) => {
+          const createdAt = new Date(consumption?.createdAt);
+          const month = createdAt?.toLocaleString("default", {
+            month: "short",
+          });
 
-        if (!monthlyData[month]) {
-          monthlyData[month] = {
-            month: month,
-            contributions: 0,
-            consumptions: 0,
-          };
-        }
+          if (!monthlyData[month]) {
+            monthlyData[month] = {
+              month: month,
+              contributions: 0,
+              consumptions: 0,
+            };
+          }
 
-        monthlyData[month].consumptions += consumer.consumptions.reduce(
-          (total: number, consumption: any) => total + consumption.amount,
-          0
-        );
+          monthlyData[month].consumptions += consumption?.amount;
+        });
       });
+
+      const monthlyDataArray: any[] = Object.values(monthlyData);
+      setMonthlyData(monthlyDataArray);
+    };
+
+    if (secondLayerProviders?.length > 0 && secondLayerConsumers?.length > 0) {
+      calculateMonthlyData();
     }
 
-    const monthlyDataArray: any[] = Object.values(monthlyData);
-
-    setMonthlyData(monthlyDataArray);
+    return;
   }, [secondLayerProviders, secondLayerConsumers]);
 
   return (
@@ -231,7 +238,7 @@ const AdminDashboard = () => {
                   <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
                 {/* GRAPH */}
-                {monthlyData.length > 0 && (
+                {monthlyData?.length > 0 && (
                   <div className="mt-10 h-[50rem] bg-black p-10 w-full rounded-xl shadow-2xl">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart
@@ -367,7 +374,7 @@ const AdminDashboard = () => {
             {activeTab === "users" && (
               <div>
                 <h2 className="text-5xl">
-                  Registerd Users: {secondLayerUsers.length}
+                  Registered Users: {secondLayerUsers.length}
                 </h2>
                 {/* USERS TABLE */}
                 <div className="overflow-x-auto mt-10">

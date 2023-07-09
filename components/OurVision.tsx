@@ -6,7 +6,7 @@ const OurVision = () => {
     <section id="our-vision" className="wrapper section-padding">
       <SectionTitle title="Our Vision" />
 
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-20 text-xl">
         {/* PART 1 */}
         <div className="grid lg:grid-cols-5 gap-20">
           <div className="space-y-5 lg:col-span-3">

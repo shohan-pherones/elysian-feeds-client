@@ -33,17 +33,17 @@ const RegisterPage = () => {
         dispatch(login(data));
         router.push("/");
         toast.success("Successfully registered.");
-      }
 
-      setFormData({
-        name: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        image: "",
-        address: "",
-        occupation: "",
-      });
+        setFormData({
+          name: "",
+          email: "",
+          phoneNumber: "",
+          password: "",
+          image: "",
+          address: "",
+          occupation: "",
+        });
+      }
     },
     [formData, router, dispatch]
   );

@@ -28,12 +28,12 @@ const LoginPage = () => {
         dispatch(login(data));
         router.push("/");
         toast.success("Successfully logged in.");
-      }
 
-      setFormData({
-        email: "",
-        password: "",
-      });
+        setFormData({
+          email: "",
+          password: "",
+        });
+      }
     },
     [formData, router, dispatch]
   );

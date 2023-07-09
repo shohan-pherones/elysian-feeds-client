@@ -161,7 +161,6 @@ const ConsumerConnectorDashboard = () => {
           if (!monthlyData[month]) {
             monthlyData[month] = {
               month: month,
-              contributions: 0,
               consumptions: 0,
             };
           }

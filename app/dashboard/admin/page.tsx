@@ -27,6 +27,7 @@ import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
+import clsx from "clsx";
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<string>("dashboard");
@@ -35,8 +36,6 @@ const AdminDashboard = () => {
   const [secondLayerProviders, setSecondLayerProviders] = useState([]);
   const [secondLayerConsumers, setSecondLayerConsumers] = useState([]);
   const [monthlyData, setMonthlyData] = useState<any[]>([]);
-
-  console.log(monthlyData);
 
   const userStore = useSelector((state: RootState) => state.user?.user);
 
@@ -167,14 +166,12 @@ const AdminDashboard = () => {
       });
 
       const monthlyDataArray: any[] = Object.values(monthlyData);
-      setMonthlyData(monthlyDataArray);
+      setMonthlyData(monthlyDataArray?.reverse());
     };
 
     if (secondLayerProviders?.length > 0 && secondLayerConsumers?.length > 0) {
       calculateMonthlyData();
     }
-
-    return;
   }, [secondLayerProviders, secondLayerConsumers]);
 
   return (
@@ -194,14 +191,24 @@ const AdminDashboard = () => {
               >
                 {<MdDashboard />}
               </DashboardTab>
-              <DashboardTab
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                tabName="requests"
-                placeholder="Requests"
-              >
-                {<BsEnvelopePaper />}
-              </DashboardTab>
+              <div className="relative">
+                <DashboardTab
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                  tabName="requests"
+                  placeholder="Requests"
+                >
+                  {<BsEnvelopePaper />}
+                </DashboardTab>
+                <div
+                  className={clsx(
+                    "absolute w-7 h-7 rounded-full bg-orange-500 -right-2 -top-2 z-[1] text-white flex justify-center items-center",
+                    secondLayerCheckposts?.length > 0 ? "block" : "hidden"
+                  )}
+                >
+                  {secondLayerCheckposts?.length}
+                </div>
+              </div>
               <DashboardTab
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}

@@ -9,6 +9,16 @@ import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { axiosPost } from "@/lib/axiosPost";
 import { IoIosCreate, IoMdClose } from "react-icons/io";
 import { toast } from "react-hot-toast";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import DashboardTab from "@/components/DashboardTab";
 import SectionTitle from "@/components/SectionTitle";
 import useFetch from "@/hooks/useFetch";
@@ -22,6 +32,7 @@ const ConsumerConnectorDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("dashboard");
   const [secondLayerConsumers, setSecondLayerConsumers] = useState<any[]>([]);
+  const [monthlyData, setMonthlyData] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     rating: "",
     body: "",
@@ -136,6 +147,38 @@ const ConsumerConnectorDashboard = () => {
     });
   };
 
+  useEffect(() => {
+    const calculateMonthlyData = () => {
+      const monthlyData: any = {};
+
+      secondLayerConsumers?.forEach((consumer: any) => {
+        consumer?.consumptions?.forEach((consumption: any) => {
+          const createdAt = new Date(consumption?.createdAt);
+          const month = createdAt?.toLocaleString("default", {
+            month: "short",
+          });
+
+          if (!monthlyData[month]) {
+            monthlyData[month] = {
+              month: month,
+              contributions: 0,
+              consumptions: 0,
+            };
+          }
+
+          monthlyData[month].consumptions += consumption?.amount;
+        });
+      });
+
+      const monthlyDataArray: any[] = Object.values(monthlyData);
+      setMonthlyData(monthlyDataArray?.reverse());
+    };
+
+    if (secondLayerConsumers?.length > 0) {
+      calculateMonthlyData();
+    }
+  }, [secondLayerConsumers]);
+
   return (
     <main className="mt-16">
       <section className="wrapper section-padding">
@@ -188,6 +231,35 @@ const ConsumerConnectorDashboard = () => {
                   Welcome back,
                   <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
+                {/* GRAPH */}
+                {monthlyData?.length > 0 && (
+                  <div className="mt-10 h-[50rem] bg-black p-10 w-full rounded-xl shadow-2xl">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        width={500}
+                        height={300}
+                        data={monthlyData}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line
+                          type="monotone"
+                          dataKey="consumptions"
+                          stroke="#FF9EAA"
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
               </div>
             )}
             {/* FOR SPECIFIC USER'S CONSUMERS */}

@@ -11,6 +11,16 @@ import { FaHandsHelping } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { axiosPatch } from "@/lib/axiosPatch";
 import { toast } from "react-hot-toast";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import SectionTitle from "@/components/SectionTitle";
 import DashboardTab from "@/components/DashboardTab";
 import Image from "next/image";
@@ -24,6 +34,7 @@ const AdminDashboard = () => {
   const [secondLayerUsers, setSecondLayerUsers] = useState([]);
   const [secondLayerProviders, setSecondLayerProviders] = useState([]);
   const [secondLayerConsumers, setSecondLayerConsumers] = useState([]);
+  const [monthlyData, setMonthlyData] = useState<any[]>([]);
 
   const userStore = useSelector((state: RootState) => state.user?.user);
 
@@ -111,6 +122,54 @@ const AdminDashboard = () => {
     [userStore?.token, secondLayerCheckposts]
   );
 
+  useEffect(() => {
+    const monthlyData: any = {};
+
+    if (secondLayerProviders.length > 0 && secondLayerConsumers.length > 0) {
+      secondLayerProviders.forEach((provider: any) => {
+        const createdAt = new Date(provider.createdAt);
+        const month: string = createdAt.toLocaleString("default", {
+          month: "short",
+        });
+
+        if (!monthlyData[month]) {
+          monthlyData[month] = {
+            month: month,
+            contributions: 0,
+            consumptions: 0,
+          };
+        }
+
+        monthlyData[month].contributions += provider.contributions.reduce(
+          (total: number, contribution: any) => total + contribution.amount,
+          0
+        );
+      });
+
+      secondLayerConsumers.forEach((consumer: any) => {
+        const createdAt = new Date(consumer.createdAt);
+        const month = createdAt.toLocaleString("default", { month: "short" });
+
+        if (!monthlyData[month]) {
+          monthlyData[month] = {
+            month: month,
+            contributions: 0,
+            consumptions: 0,
+          };
+        }
+
+        monthlyData[month].consumptions += consumer.consumptions.reduce(
+          (total: number, consumption: any) => total + consumption.amount,
+          0
+        );
+      });
+    }
+
+    const monthlyDataArray: any[] = Object.values(monthlyData);
+
+    setMonthlyData(monthlyDataArray);
+  }, [secondLayerProviders, secondLayerConsumers]);
+
   return (
     <main className="mt-16">
       <section className="wrapper section-padding">
@@ -172,6 +231,40 @@ const AdminDashboard = () => {
                   <span className="text-accent"> {userStore?.user?.name}.</span>
                 </h2>
                 {/* GRAPH */}
+                {monthlyData.length > 0 && (
+                  <div className="mt-10 h-[50rem] bg-black p-10 w-full rounded-xl shadow-2xl">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        width={500}
+                        height={300}
+                        data={monthlyData}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line
+                          type="monotone"
+                          dataKey="contributions"
+                          stroke="#3AA6B9"
+                          activeDot={{ r: 8 }}
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="consumptions"
+                          stroke="#FF9EAA"
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
               </div>
             )}
             {/* FOR REQUESTS */}

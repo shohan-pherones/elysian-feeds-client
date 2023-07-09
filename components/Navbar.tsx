@@ -5,6 +5,7 @@ import { RootState } from "@/store/store";
 import { logout } from "@/features/auth/userSlice";
 import { useCallback } from "react";
 import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -62,7 +63,12 @@ const Navbar = () => {
   );
 
   return (
-    <header className="navbar h-16 bg-base-100/80 fixed top-0 left-0 z-[100] shadow-xl border-b border-white/30 backdrop-blur-xl">
+    <motion.header
+      initial={{ y: "-100%" }}
+      whileInView={{ y: 0 }}
+      transition={{ duration: 1, ease: "easeInOut" }}
+      className="navbar h-16 bg-base-100/80 fixed top-0 left-0 z-[100] shadow-xl border-b border-white/30 backdrop-blur-xl"
+    >
       <nav className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -128,7 +134,7 @@ const Navbar = () => {
           </button>
         )}
       </nav>
-    </header>
+    </motion.header>
   );
 };
 

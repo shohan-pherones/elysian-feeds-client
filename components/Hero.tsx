@@ -1,8 +1,9 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay, Pagination, Parallax } from "swiper";
+import { Navigation, Autoplay, Pagination } from "swiper";
 import { data } from "@/data/heroImages";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import Overlay from "./Overlay";
@@ -14,7 +15,6 @@ const Hero = () => {
   return (
     <section className="w-full h-[calc(100vh-4rem)]">
       <Swiper
-        parallax={true}
         pagination={{
           clickable: true,
         }}
@@ -26,7 +26,7 @@ const Hero = () => {
         loop={true}
         grabCursor={true}
         navigation={true}
-        modules={[Navigation, Autoplay, Pagination, Parallax]}
+        modules={[Navigation, Autoplay, Pagination]}
         className="mySwiper w-full h-full"
       >
         {data.map((item: any) => (
@@ -42,19 +42,44 @@ const Hero = () => {
               />
               <Overlay />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center z-[2] space-y-5 text-white">
-                <h1
-                  data-swiper-parallax="-100%"
-                  className="text-8xl font-bold uppercase"
-                >
-                  {item.heading}
-                </h1>
-                <p data-swiper-parallax="-200%" className="text-xl">
-                  {item.paragraph}
-                </p>
-                <div data-swiper-parallax="-300%">
-                  <Link href="/login" className="btn btn-accent">
-                    {item.cta}
-                  </Link>
+                <div className="overflow-hidden">
+                  <motion.h1
+                    initial={{ y: "100%" }}
+                    whileInView={{ y: 0 }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                    className="text-8xl font-bold uppercase"
+                  >
+                    {item.heading}
+                  </motion.h1>
+                </div>
+                <div className="overflow-hidden">
+                  <motion.p
+                    initial={{ y: "100%" }}
+                    whileInView={{ y: 0 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: "easeInOut",
+                      delay: 0.3,
+                    }}
+                    className="text-xl"
+                  >
+                    {item.paragraph}
+                  </motion.p>
+                </div>
+                <div className="overflow-hidden">
+                  <motion.div
+                    initial={{ y: "100%" }}
+                    whileInView={{ y: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeInOut",
+                      delay: 0.6,
+                    }}
+                  >
+                    <Link href="/login" className="btn btn-accent">
+                      {item.cta}
+                    </Link>
+                  </motion.div>
                 </div>
               </div>
             </div>

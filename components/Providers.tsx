@@ -32,8 +32,9 @@ const Providers = () => {
                 )
             )
             .slice(0, 8)
-            .map((prova: any) => (
+            .map((prova: any, index: number) => (
               <ProviderCard
+                index={index}
                 key={prova._id}
                 address={prova.address}
                 contributions={prova.contributions.reduce(

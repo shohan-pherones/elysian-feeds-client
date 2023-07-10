@@ -47,12 +47,12 @@ const Hero = () => {
                     initial={{ y: "100%" }}
                     whileInView={{ y: 0 }}
                     transition={{ duration: 1, ease: "easeInOut" }}
-                    className="text-8xl font-bold uppercase"
+                    className="text-4xl md:text-8xl font-bold uppercase"
                   >
                     {item.heading}
                   </motion.h1>
                 </div>
-                <div className="overflow-hidden">
+                <div className="overflow-hidden hidden md:block">
                   <motion.p
                     initial={{ y: "100%" }}
                     whileInView={{ y: 0 }}

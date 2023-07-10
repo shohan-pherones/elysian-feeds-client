@@ -56,7 +56,7 @@ const Testimonials = () => {
                 </div>
                 <p
                   data-swiper-parallax="-200%"
-                  className="text-xl max-w-2xl text-center"
+                  className="md:text-xl max-w-2xl text-center"
                 >
                   {review.body}
                 </p>

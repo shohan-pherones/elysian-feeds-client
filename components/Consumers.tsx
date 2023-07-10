@@ -32,8 +32,9 @@ const Consumers = () => {
                 )
             )
             .slice(0, 8)
-            .map((consumer: any) => (
+            .map((consumer: any, index: number) => (
               <ConsumerCard
+                index={index}
                 key={consumer._id}
                 address={consumer.address}
                 consumptions={consumer.consumptions.reduce(

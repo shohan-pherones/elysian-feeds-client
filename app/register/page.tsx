@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { axiosPost } from "@/lib/axiosPost";
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/features/auth/userSlice";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SectionTitle from "@/components/SectionTitle";
+import { RootState } from "@/store/store";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +24,14 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const userStore = useSelector((state: RootState) => state.user?.user);
+
+  useEffect(() => {
+    if (userStore?.user) {
+      router.push("/profile");
+    }
+  }, [router, userStore?.user]);
+
   const handleRegister = useCallback(
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -31,7 +40,7 @@ const RegisterPage = () => {
 
       if (data) {
         dispatch(login(data));
-        router.push("/");
+        router.push("/profile");
         toast.success("Successfully registered.");
 
         setFormData({

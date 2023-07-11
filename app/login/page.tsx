@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { axiosPost } from "@/lib/axiosPost";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/features/auth/userSlice";
 import Link from "next/link";
 import SectionTitle from "@/components/SectionTitle";
+import { RootState } from "@/store/store";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +19,14 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const userStore = useSelector((state: RootState) => state.user?.user);
+
+  useEffect(() => {
+    if (userStore?.user) {
+      router.push("/profile");
+    }
+  }, [router, userStore?.user]);
+
   const handleLogin = useCallback(
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
@@ -26,7 +35,7 @@ const LoginPage = () => {
 
       if (data) {
         dispatch(login(data));
-        router.push("/");
+        router.push("/profile");
         toast.success("Successfully logged in.");
 
         setFormData({

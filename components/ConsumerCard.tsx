@@ -44,7 +44,7 @@ const ConsumerCard: React.FC<ConsumerCardProps> = ({
           <p className="truncate">Address: {address}</p>
           <p className="truncate">Total Consumptions: {consumptions}</p>
           <div className="card-actions justify-start mt-3 md:mt-0">
-            <Link href={`/providers/${id}`} className="btn btn-accent">
+            <Link href={`/consumers/${id}`} className="btn btn-accent">
               View Details
             </Link>
           </div>

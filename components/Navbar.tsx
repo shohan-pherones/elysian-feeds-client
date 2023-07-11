@@ -25,6 +25,9 @@ const Navbar = () => {
         <Link href="/">Home</Link>
       </li>
       <li>
+        <Link href="/#our-vision">Our Vision</Link>
+      </li>
+      <li>
         <Link href="/#top-providers">Top Providers</Link>
       </li>
       <li>
@@ -50,9 +53,6 @@ const Navbar = () => {
           <Link href="/dashboard/admin">Dashboard</Link>
         </li>
       )}
-      <li>
-        <Link href="/#our-vision">Our Vision</Link>
-      </li>
       <li>
         <Link href="/#gallery">Gallery</Link>
       </li>

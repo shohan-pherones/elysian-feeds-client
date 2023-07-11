@@ -76,7 +76,7 @@ const Hero = () => {
                       delay: 0.6,
                     }}
                   >
-                    <Link href="/login" className="btn btn-accent">
+                    <Link href="/#our-vision" className="btn btn-accent">
                       {item.cta}
                     </Link>
                   </motion.div>

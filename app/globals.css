@@ -10,7 +10,7 @@
 ::-webkit-scrollbar-thumb {
   background-color: rgba(31, 178, 166, 0.5);
   height: 10%;
-  border-radius: 100px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -26,6 +26,7 @@
   background-color: #1fb2a6;
 }
 
+/* BASE STYLES */
 html {
   --scroll-behavior: smooth !important;
   scroll-behavior: smooth !important;

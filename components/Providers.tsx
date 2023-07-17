@@ -31,7 +31,6 @@ const Providers = () => {
                   0
                 )
             )
-            .slice(0, 8)
             .map((prova: any, index: number) => (
               <ProviderCard
                 index={index}

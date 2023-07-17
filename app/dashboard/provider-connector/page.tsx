@@ -95,6 +95,15 @@ const ProviderConnectorDashboard = () => {
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
+      if (
+        !formDataProvider.image.startsWith(
+          "https://images.pexels.com" || "https://images.unsplash.com"
+        )
+      ) {
+        toast.error("Paste any image link from pexels or unsplash.");
+        return;
+      }
+
       const data = await axiosPost(
         "/api/providers",
         { ...formDataProvider },

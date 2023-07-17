@@ -95,6 +95,15 @@ const ConsumerConnectorDashboard = () => {
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
+      if (
+        !formDataConsumer.image.startsWith(
+          "https://images.pexels.com" || "https://images.unsplash.com"
+        )
+      ) {
+        toast.error("Paste any image link from pexels or unsplash.");
+        return;
+      }
+
       const data = await axiosPost(
         "/api/consumers",
         { ...formDataConsumer },

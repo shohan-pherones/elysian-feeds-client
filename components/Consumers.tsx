@@ -31,7 +31,6 @@ const Consumers = () => {
                   0
                 )
             )
-            .slice(0, 8)
             .map((consumer: any, index: number) => (
               <ConsumerCard
                 index={index}

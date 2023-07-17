@@ -36,6 +36,15 @@ const RegisterPage = () => {
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
+      if (
+        !formData.image.startsWith(
+          "https://images.pexels.com" || "https://images.unsplash.com"
+        )
+      ) {
+        toast.error("Paste any image link from pexels or unsplash.");
+        return;
+      }
+
       const data = await axiosPost("/api/users/register", { ...formData });
 
       if (data) {
@@ -149,7 +158,7 @@ const RegisterPage = () => {
                   }
                   type="text"
                   id="image"
-                  placeholder="paste any image from https://www.pexels.com"
+                  placeholder="paste any image link from pexels or unsplash"
                   className="input input-bordered"
                 />
               </div>

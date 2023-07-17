@@ -74,8 +74,8 @@ const OurVision = () => {
               <Image
                 src="https://images.pexels.com/photos/1981111/pexels-photo-1981111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="Black and White Bicolor Cat"
-                width={1280}
-                height={720}
+                width={500}
+                height={500}
                 priority
                 className="w-full h-full object-cover"
               />
@@ -94,8 +94,8 @@ const OurVision = () => {
               <Image
                 src="https://images.pexels.com/photos/6646917/pexels-photo-6646917.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                 alt="A Group of Volunteers Assisting an Elderly Person on a Black Wheelchair For Charity"
-                width={1280}
-                height={720}
+                width={500}
+                height={500}
                 priority
                 className="w-full h-full object-cover"
               />

@@ -28,10 +28,10 @@ const Navbar = () => {
         <Link href="/#our-vision">Our Vision</Link>
       </li>
       <li>
-        <Link href="/#top-providers">Top Providers</Link>
+        <Link href="/#top-providers">Providers</Link>
       </li>
       <li>
-        <Link href="/#top-consumers">Top Consumers</Link>
+        <Link href="/#top-consumers">Consumers</Link>
       </li>
       {user && user.role === "user" && (
         <li>
@@ -95,7 +95,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost normal-case text-xl">
-          elysianFeeds
+          Elysian Feeds
         </Link>
       </nav>
 

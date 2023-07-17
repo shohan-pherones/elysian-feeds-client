@@ -12,6 +12,8 @@ const baiJamjuree = Bai_Jamjuree({
 
 export const metadata = {
   title: "Elysian Feeds | Home",
+  description:
+    "Elysian Feeds is a charitable initiative website that empowers users to contribute resources or consume them, fostering collaboration and empowerment.",
 };
 
 export default function RootLayout({
@@ -23,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={baiJamjuree.className}>
         <ReduxProvider>
-          <Toaster />
+          <Toaster position="bottom-left" toastOptions={{ duration: 5000 }} />
           <Navbar />
           {children}
           <Footer />

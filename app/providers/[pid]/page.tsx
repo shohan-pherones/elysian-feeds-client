@@ -68,7 +68,7 @@ const ProviderDetailsPage = ({ params }: { params: { pid: string } }) => {
                   className="border-b border-white/30"
                 >
                   Total Contributions:{" "}
-                  {provider.contributions.reduce(
+                  {provider.contributions?.reduce(
                     (sum: number, contr: any) => (sum += contr?.amount),
                     0
                   )}
@@ -111,7 +111,7 @@ const ProviderDetailsPage = ({ params }: { params: { pid: string } }) => {
               </div>
             </div>
             <SectionTitle title="Contributions" />
-            {/* CONTRIBUTION TABLE */}
+            {/* CONTRIBUTIONS TABLE */}
             <div className="overflow-x-auto">
               <table className="table">
                 {/* head */}

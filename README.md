@@ -49,13 +49,3 @@ At Elysian Feeds, we welcome contributions from the open-source community to hel
 - **Spread the Word:** If you enjoy using our platform, please help spread the word by sharing it on social media or with your network. This will help us reach more users and grow our community.
 
 We appreciate all contributions and look forward to collaborating with the open-source community to make Elysian Feeds the best it can be!
-
-## Community
-
-At Elysian Feeds, we value community and believe that collaboration and communication are key to building a successful platform. We invite you to join our community and get involved in discussions, share your feedback, and contribute to the platform.
-
-To join our community, you can connect with us on our Discord server at (https://discord.gg/ynMkTWgxuf). Here, you can chat with other members of the community, ask questions, and get help from our team.
-
-We also encourage you to follow us on social media, including Twitter and Instagram, where we regularly share updates and news about the platform.
-
-Thank you for being a part of our community, and we look forward to growing together!

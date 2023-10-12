@@ -4,6 +4,7 @@ import Providers from "@/components/Providers";
 import Testimonials from "@/components/Testimonials";
 import Gallery from "@/components/Gallery";
 import OurVision from "@/components/OurVision";
+import OurStory from "@/components/OurStory";
 
 const HomePage = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage = () => {
       <Consumers />
       <Gallery />
       <Testimonials />
+      <OurStory fromHome />
     </main>
   );
 };

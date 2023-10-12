@@ -18,8 +18,8 @@ const HomePage = () => {
       <Consumers />
       <OurStory fromHome />
       <Gallery />
-      <Blogs />
       <Testimonials />
+      <Blogs />
       <FAQ />
       <Contact />
     </main>

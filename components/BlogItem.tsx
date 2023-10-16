@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface BlogItemProps {
   blog: {
@@ -9,12 +12,18 @@ interface BlogItemProps {
     publishedDate: string;
     body: string;
   };
+  index: number;
 }
 
-const BlogItem: React.FC<BlogItemProps> = ({ blog }) => {
+const BlogItem: React.FC<BlogItemProps> = ({ blog, index }) => {
   return (
     <div className="overflow-hidden h-full">
-      <div className="card h-full w-full bg-base-300 border border-white/30">
+      <motion.div
+        initial={{ y: "-100%" }}
+        whileInView={{ y: 0 }}
+        transition={{ ease: "easeInOut", duration: 1, delay: index / 20 }}
+        className="card h-full w-full bg-base-300 border border-white/30"
+      >
         <figure>
           <Image
             src={blog.banner}
@@ -34,7 +43,7 @@ const BlogItem: React.FC<BlogItemProps> = ({ blog }) => {
           <hr className="border-white/30" />
           <p className="opacity-60">{blog.body.substring(0, 200)}...</p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

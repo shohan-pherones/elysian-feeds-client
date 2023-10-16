@@ -6,7 +6,6 @@ import Gallery from "@/components/Gallery";
 import OurVision from "@/components/OurVision";
 import OurStory from "@/components/OurStory";
 import Contact from "@/components/Contact";
-import FAQ from "@/components/FAQ";
 import Blogs from "@/components/Blogs";
 
 const HomePage = () => {
@@ -20,7 +19,6 @@ const HomePage = () => {
       <Gallery />
       <Testimonials />
       <Blogs />
-      <FAQ />
       <Contact />
     </main>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import SectionTitle from "./SectionTitle";
 import emailjs from "@emailjs/browser";
@@ -46,19 +47,27 @@ const Contact = () => {
     <section className="wrapper section-padding">
       <SectionTitle title="Need help? Contact us" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="w-full h-[30rem] overflow-hidden rounded-xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 overflow-hidden">
+        <motion.div
+          className="w-full h-[30rem] overflow-hidden rounded-xl"
+          initial={{ x: "-100%" }}
+          whileInView={{ x: 0 }}
+          transition={{ ease: "easeInOut", duration: 1 }}
+        >
           <Image
             src="https://images.pexels.com/photos/6646919/pexels-photo-6646919.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt="Man Pushing an Elderly Man on a Black Wheelchair"
-            width={360}
-            height={640}
+            width={720}
+            height={1280}
             priority
             className="w-full h-full object-cover"
           />
-        </div>
+        </motion.div>
 
-        <form
+        <motion.form
+          initial={{ x: "100%" }}
+          whileInView={{ x: 0 }}
+          transition={{ ease: "easeInOut", duration: 1 }}
           ref={formRef}
           onSubmit={handleSubmit}
           className="flex flex-col gap-5 order-first md:order-last"
@@ -82,7 +91,7 @@ const Contact = () => {
               minLength={3}
               id="name"
               name="fullname"
-              className="bg-transparent border outline-none rounded-xl px-4 py-2 border-white/30 focus:border-accent duration-300"
+              className="bg-transparent border outline-none rounded-xl px-4 py-3 border-white/30 focus:border-accent duration-300"
             />
           </div>
           <div className="form-control flex flex-col gap-1">
@@ -99,7 +108,7 @@ const Contact = () => {
               placeholder="hello@example.com"
               required
               id="email"
-              className="bg-transparent border outline-none rounded-xl px-4 py-2 border-white/30 focus:border-accent duration-300"
+              className="bg-transparent border outline-none rounded-xl px-4 py-3 border-white/30 focus:border-accent duration-300"
             />
           </div>
           <div className="form-control flex flex-col gap-1">
@@ -116,13 +125,13 @@ const Contact = () => {
               id="message"
               name="message"
               rows={5}
-              className="bg-transparent border outline-none rounded-xl px-4 py-2 border-white/30 focus:border-accent duration-300 resize-none"
+              className="bg-transparent border outline-none rounded-xl px-4 py-3 border-white/30 focus:border-accent duration-300 resize-none"
             />
           </div>
           <button className="btn btn-accent" type="submit">
             Submit
           </button>
-        </form>
+        </motion.form>
       </div>
     </section>
   );

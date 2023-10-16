@@ -26,12 +26,13 @@ const BlogItem: React.FC<BlogItemProps> = ({ blog }) => {
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title truncate">{blog.title}</h2>
+          <h2 className="card-title">{blog.title}</h2>
           <div className="flex items-center justify-between gap-5">
             <p>{blog.author}</p>
             <p>{blog.publishedDate}</p>
           </div>
-          <p>{blog.body.substring(0, 200)}...</p>
+          <hr className="border-white/30" />
+          <p className="opacity-60">{blog.body.substring(0, 200)}...</p>
         </div>
       </div>
     </div>

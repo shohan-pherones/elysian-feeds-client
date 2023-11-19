@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import SectionTitle from "./SectionTitle";
-import emailjs from "@emailjs/browser";
+import { useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import SectionTitle from "./SectionTitle";
 
 const Contact = () => {
   const [formData, setFormData] = useState({

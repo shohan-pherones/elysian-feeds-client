@@ -1,14 +1,14 @@
 "use client";
 
-import { useCallback, useState, useEffect } from "react";
+import SectionTitle from "@/components/SectionTitle";
+import { login } from "@/features/auth/userSlice";
 import { axiosPost } from "@/lib/axiosPost";
+import { RootState } from "@/store/store";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/features/auth/userSlice";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import SectionTitle from "@/components/SectionTitle";
-import { RootState } from "@/store/store";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -36,12 +36,12 @@ const RegisterPage = () => {
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
-      if (
-        !formData.image.startsWith(
-          "https://images.pexels.com" || "https://images.unsplash.com"
-        )
-      ) {
-        toast.error("Paste any image link from pexels or unsplash.");
+      const isValidPhotoUrl: boolean =
+        formData.image.includes("images.pexels.com") ||
+        formData.image.includes("images.unsplash.com");
+
+      if (!isValidPhotoUrl) {
+        toast.error("Please enter a valid photo URL from Unsplash or Pexels.");
         return;
       }
 

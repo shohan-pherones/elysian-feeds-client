@@ -1,9 +1,9 @@
 "use client";
 
 import SectionTitle from "@/components/SectionTitle";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 interface OurStoryProps {
   fromHome?: boolean;

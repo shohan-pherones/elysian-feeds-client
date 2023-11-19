@@ -1,12 +1,12 @@
+import Blogs from "@/components/Blogs";
 import Consumers from "@/components/Consumers";
+import Contact from "@/components/Contact";
+import Gallery from "@/components/Gallery";
 import Hero from "@/components/Hero";
+import OurStory from "@/components/OurStory";
+import OurVision from "@/components/OurVision";
 import Providers from "@/components/Providers";
 import Testimonials from "@/components/Testimonials";
-import Gallery from "@/components/Gallery";
-import OurVision from "@/components/OurVision";
-import OurStory from "@/components/OurStory";
-import Contact from "@/components/Contact";
-import Blogs from "@/components/Blogs";
 
 const HomePage = () => {
   return (

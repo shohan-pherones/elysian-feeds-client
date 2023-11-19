@@ -1,8 +1,8 @@
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { ReduxProvider } from "@/store/provider";
 import { Bai_Jamjuree } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import "./globals.css";
 
 const baiJamjuree = Bai_Jamjuree({

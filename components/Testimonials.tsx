@@ -1,18 +1,18 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay, Pagination, Parallax } from "swiper";
-import { Rating, RoundedStar } from "@smastrom/react-rating";
-import { IoIosQuote } from "react-icons/io";
-import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
-import SectionTitle from "./SectionTitle";
-import Loading from "./Loading";
-import Error from "./Error";
+import { Rating, RoundedStar } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+import Image from "next/image";
+import { IoIosQuote } from "react-icons/io";
+import { Autoplay, Navigation, Pagination, Parallax } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "@smastrom/react-rating/style.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Error from "./Error";
+import Loading from "./Loading";
+import SectionTitle from "./SectionTitle";
 
 const myStyles = {
   itemShapes: RoundedStar,

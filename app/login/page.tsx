@@ -1,14 +1,14 @@
 "use client";
 
-import { useCallback, useState, useEffect } from "react";
-import { axiosPost } from "@/lib/axiosPost";
-import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/features/auth/userSlice";
-import Link from "next/link";
 import SectionTitle from "@/components/SectionTitle";
+import { login } from "@/features/auth/userSlice";
+import { axiosPost } from "@/lib/axiosPost";
 import { RootState } from "@/store/store";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({

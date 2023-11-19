@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { RootState } from "@/store/store";
-import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
 import SectionTitle from "@/components/SectionTitle";
+import { RootState } from "@/store/store";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
   const userStore = useSelector((state: RootState) => state.user?.user);

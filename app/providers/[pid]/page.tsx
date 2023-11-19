@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Error from "@/components/Error";
 import Loading from "@/components/Loading";
 import SectionTitle from "@/components/SectionTitle";
 import useFetch from "@/hooks/useFetch";
+import { motion } from "framer-motion";
 
 const ProviderDetailsPage = ({ params }: { params: { pid: string } }) => {
   const {

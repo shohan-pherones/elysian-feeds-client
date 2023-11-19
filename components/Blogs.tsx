@@ -1,6 +1,6 @@
 import { data } from "@/data/blogs";
-import SectionTitle from "./SectionTitle";
 import BlogItem from "./BlogItem";
+import SectionTitle from "./SectionTitle";
 
 const Blogs = () => {
   return (

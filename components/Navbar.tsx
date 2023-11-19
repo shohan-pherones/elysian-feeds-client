@@ -1,13 +1,13 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import { logout } from "@/features/auth/userSlice";
+import { RootState } from "@/store/store";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 import { useCallback } from "react";
 import { toast } from "react-hot-toast";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
   const user = useSelector((state: RootState) => state?.user?.user?.user);

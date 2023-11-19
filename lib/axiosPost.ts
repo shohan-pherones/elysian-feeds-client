@@ -1,5 +1,5 @@
-import { toast } from "react-hot-toast";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export const axiosPost = async (
   endpoint: string,

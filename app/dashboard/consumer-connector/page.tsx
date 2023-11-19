@@ -1,31 +1,31 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
-import { MdDashboard, MdCreateNewFolder } from "react-icons/md";
-import { LiaHandsHelpingSolid } from "react-icons/lia";
-import { axiosPost } from "@/lib/axiosPost";
-import { IoIosCreate, IoMdClose } from "react-icons/io";
-import { toast } from "react-hot-toast";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 import DashboardTab from "@/components/DashboardTab";
+import Error from "@/components/Error";
+import Loading from "@/components/Loading";
 import SectionTitle from "@/components/SectionTitle";
 import useFetch from "@/hooks/useFetch";
-import Loading from "@/components/Loading";
-import Error from "@/components/Error";
-import Image from "next/image";
+import { axiosPost } from "@/lib/axiosPost";
+import { RootState } from "@/store/store";
 import clsx from "clsx";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { IoIosCreate, IoMdClose } from "react-icons/io";
+import { LiaHandsHelpingSolid } from "react-icons/lia";
+import { MdCreateNewFolder, MdDashboard } from "react-icons/md";
+import { useSelector } from "react-redux";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const ConsumerConnectorDashboard = () => {
   const [selectedConsumer, setSelectedConsumer] = useState<string>("");
@@ -95,12 +95,12 @@ const ConsumerConnectorDashboard = () => {
     async (e: React.SyntheticEvent) => {
       e.preventDefault();
 
-      if (
-        !formDataConsumer.image.startsWith(
-          "https://images.pexels.com" || "https://images.unsplash.com"
-        )
-      ) {
-        toast.error("Paste any image link from pexels or unsplash.");
+      const isValidPhotoUrl: boolean =
+        formDataConsumer.image.includes("images.pexels.com") ||
+        formDataConsumer.image.includes("images.unsplash.com");
+
+      if (!isValidPhotoUrl) {
+        toast.error("Please enter a valid photo URL from Unsplash or Pexels.");
         return;
       }
 

@@ -1,10 +1,10 @@
 "use client";
 
 import useFetch from "@/hooks/useFetch";
-import SectionTitle from "./SectionTitle";
-import ProviderCard from "./ProviderCard";
-import Loading from "./Loading";
 import Error from "./Error";
+import Loading from "./Loading";
+import ProviderCard from "./ProviderCard";
+import SectionTitle from "./SectionTitle";
 
 const Providers = () => {
   const { data: providers, error, isLoading } = useFetch("/api/providers/all");

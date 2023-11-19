@@ -2,9 +2,9 @@
 
 import useFetch from "@/hooks/useFetch";
 import ConsumerCard from "./ConsumerCard";
-import SectionTitle from "./SectionTitle";
-import Loading from "./Loading";
 import Error from "./Error";
+import Loading from "./Loading";
+import SectionTitle from "./SectionTitle";
 
 const Consumers = () => {
   const { data: consumers, error, isLoading } = useFetch("/api/consumers/all");

@@ -1,6 +1,6 @@
 import { data } from "@/data/galleryImages";
-import SectionTitle from "./SectionTitle";
 import GalleryItem from "./GalleryItem";
+import SectionTitle from "./SectionTitle";
 
 const Gallery = () => {
   return (

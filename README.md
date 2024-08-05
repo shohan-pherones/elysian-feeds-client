@@ -4,11 +4,9 @@ Elysian Feeds is a charitable initiative website that empowers users to contribu
 
 ## Features
 
-Elysian Feeds comes packed with a variety of useful features, including:
-
 - **Contribution and Consumption:** Users can actively participate by contributing resources or consuming them from the platform, creating a cycle of giving and receiving.
 
-- **User Role Management:** UThe admin has the authority to manage user roles, ensuring efficient operations and maintaining the integrity of the platform.
+- **User Role Management:** The admin has the authority to manage user roles, ensuring efficient operations and maintaining the integrity of the platform.
 
 - **Contribution and Consumption Tracking:** The admin can analyze and track contributions and consumption patterns, allowing for effective monitoring of the platform's impact and performance.
 
@@ -24,28 +22,44 @@ Elysian Feeds comes packed with a variety of useful features, including:
 
 - **Sustainable Solution:** The platform aims to address various societal needs in a sustainable manner, creating a more equitable and compassionate future for communities worldwide.
 
-## Installation
+## Run Locally
 
-To install Elysian Feeds Client, follow these simple steps:
+Clone the project
 
-1. Clone the repository using `git clone https://github.com/shohan-pherones/elysian-feeds-client.git`
-2. Install the required dependencies by running `npm install` or `npm i`.
-3. Create a `.env` file in the root directory and add the following variables:
-   - `NEXT_PUBLIC_BASE_URL`
-4. Start the application by running `npm run dev`.
+```bash
+  git clone https://github.com/shohan-pherones/elysian-feeds-client.git
+```
 
-## Contribution
+Go to the project directory
 
-At Elysian Feeds, we welcome contributions from the open-source community to help improve and enhance our platform. Here are a few ways you can contribute:
+```bash
+  cd elysian-feeds-client
+```
 
-- **Bug Reports:** If you come across any issues or bugs while using our platform, please report them using our issue tracker on GitHub. This will help us identify and fix the issues quickly.
+Install dependencies
 
-- **Feature Requests:** If you have ideas for new features or improvements that could enhance our platform, please submit them through our issue tracker. We welcome all feedback and suggestions!
+```bash
+  npm install
+```
 
-- **Pull Requests:** If you're interested in contributing code to our platform, you can submit pull requests on GitHub. We ask that you follow our coding conventions and submit tests with your code changes.
+Start the server
 
-- **Documentation:** We welcome contributions to our documentation, including updating existing documentation or adding new documentation as needed.
+```bash
+  npm run dev
+```
 
-- **Spread the Word:** If you enjoy using our platform, please help spread the word by sharing it on social media or with your network. This will help us reach more users and grow our community.
+## Environment Variables
 
-We appreciate all contributions and look forward to collaborating with the open-source community to make Elysian Feeds the best it can be!
+To run this project, you will need to add the following environment variables to your .env file
+
+`NEXT_PUBLIC_BASE_URL`
+
+`NEXT_PUBLIC_EMAILJS_SERVICE_ID`
+
+`NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
+
+`NEXT_PUBLIC_EMAILJS_PUBLIC_ID`
+
+## Feedback
+
+If you have any feedback, please reach out to me at shohan.sub.56@gmail.com

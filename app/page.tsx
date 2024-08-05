@@ -1,4 +1,3 @@
-import Blogs from "@/components/Blogs";
 import Consumers from "@/components/Consumers";
 import Contact from "@/components/Contact";
 import Gallery from "@/components/Gallery";
@@ -18,7 +17,6 @@ const HomePage = () => {
       <OurStory fromHome />
       <Gallery />
       <Testimonials />
-      <Blogs />
       <Contact />
     </main>
   );

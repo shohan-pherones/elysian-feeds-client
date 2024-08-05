@@ -14,8 +14,8 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ src, alt, index }) => {
     <motion.div
       initial={{ scale: 0, borderRadius: "100px" }}
       whileInView={{ scale: 1, borderRadius: "0.75rem" }}
-      transition={{ ease: "easeInOut", duration: 1, delay: index / 30 }}
-      className="w-full h-[25rem] overflow-hidden rounded-xl group hover:scale-90 duration-700"
+      transition={{ ease: "easeInOut", duration: 0.75, delay: index / 10 }}
+      className="w-full h-[25rem] overflow-hidden rounded-xl group"
     >
       <Image
         src={src}

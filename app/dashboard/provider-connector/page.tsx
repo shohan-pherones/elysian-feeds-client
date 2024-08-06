@@ -399,7 +399,7 @@ const ProviderConnectorDashboard = () => {
                         }
                         type="text"
                         id="image"
-                        placeholder="paste any image from https://www.pexels.com"
+                        placeholder="paste any image from pexels or unsplash"
                         className="input input-bordered"
                       />
                     </div>

@@ -37,8 +37,8 @@ const RegisterPage = () => {
       e.preventDefault();
 
       const isValidPhotoUrl: boolean =
-        formData.image.includes("images.pexels.com") ||
-        formData.image.includes("images.unsplash.com");
+        formData.image.includes("pexels") ||
+        formData.image.includes("unsplash");
 
       if (!isValidPhotoUrl) {
         toast.error("Please enter a valid photo URL from Unsplash or Pexels.");

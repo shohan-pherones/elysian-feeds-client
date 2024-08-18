@@ -96,8 +96,8 @@ const ProviderConnectorDashboard = () => {
       e.preventDefault();
 
       const isValidPhotoUrl: boolean =
-        formDataProvider.image.includes("images.pexels.com") ||
-        formDataProvider.image.includes("images.unsplash.com");
+        formDataProvider.image.includes("pexels") ||
+        formDataProvider.image.includes("unsplash");
 
       if (!isValidPhotoUrl) {
         toast.error("Please enter a valid photo URL from Unsplash or Pexels.");

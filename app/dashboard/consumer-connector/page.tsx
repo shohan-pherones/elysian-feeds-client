@@ -96,8 +96,8 @@ const ConsumerConnectorDashboard = () => {
       e.preventDefault();
 
       const isValidPhotoUrl: boolean =
-        formDataConsumer.image.includes("images.pexels.com") ||
-        formDataConsumer.image.includes("images.unsplash.com");
+        formDataConsumer.image.includes("pexels") ||
+        formDataConsumer.image.includes("unsplash");
 
       if (!isValidPhotoUrl) {
         toast.error("Please enter a valid photo URL from Unsplash or Pexels.");
